@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET_KEY = 'qwerty';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
-const createToken = (payload) => jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '7d' });
+const createToken = (payload) => jwt.sign(payload, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
 
 module.exports = { createToken };
