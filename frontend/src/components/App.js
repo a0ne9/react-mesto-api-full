@@ -29,23 +29,17 @@ function App() {
   const [toolTipMessage, setToolTipMessage] = React.useState(true);
 
   React.useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      api
-        .getProfile()
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    handleTokenCheck();
+    if (loggedIn) {
+      Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialcards]) => {
+        setCurrentUser(profile);
+        setCards(initialcards)
+      }).catch((err) => {
+        console.log(err);
+      });
     }
 
-  }, []);
-
-  React.useEffect(() => {
-    handleTokenCheck();
-  }, []);
+  }, [loggedIn]);
 
   function openProfilePopup() {
     toggleEditProfile(true);
@@ -75,7 +69,7 @@ function App() {
     api
       .setUserInfo(name, about)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -124,26 +118,10 @@ function App() {
       });
   }
 
-  React.useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      api
-        .getInitialCards()
-        .then((res) => {
-          setCards(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-  }, []);
-
   function handleAddPlaceSubmit({ name, link }) {
     api
       .addCard(name, link)
       .then((newCard) => {
-        console.log(newCard)
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
