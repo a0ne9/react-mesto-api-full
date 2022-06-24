@@ -6,9 +6,6 @@ const ForbiddenError = require('../errors/ForbiddenError');
 module.exports.createCard = (req, res, next) => {
   const owner = req.user.id;
   const { name, link } = req.body;
-  if (!name || !link) {
-    throw new BadRequestError('Название или ссылка не введены!');
-  }
   Card.create({ name, link, owner })
     .then((card) => {
       res.status(201).send(card);

@@ -82,9 +82,6 @@ module.exports.getUserByID = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   const { id } = req.user;
-  if (!name || !about) {
-    throw new BadRequestError('Имя или о себе введены некорректно!');
-  }
   User.findByIdAndUpdate(
     id,
     { name, about },

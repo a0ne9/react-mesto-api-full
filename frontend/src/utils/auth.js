@@ -1,4 +1,4 @@
-export const baseUrl = "http://api.mestodomain.students.nomoredomains.xyz";
+export const baseUrl = "https://api.mestodomain.students.nomoredomains.xyz";
 
 export const checkResponse = (res) => {
   if (res.ok) {
