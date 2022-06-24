@@ -29,12 +29,14 @@ function App() {
   const [headerMail, setHeaderMail] = React.useState(" ");
   const [toolTipMessage, setToolTipMessage] = React.useState(true);
 
+
   React.useEffect(() =>{
     handleTokenCheck();
     if (loggedIn) {
       Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialCards]) => {
         setCurrentUser(profile);
         setCards(initialCards);
+        navigate("/")
       }).catch((err) => {
         console.log(err);
       });
