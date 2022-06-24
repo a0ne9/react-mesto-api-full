@@ -173,7 +173,7 @@ function App() {
       .login(password, email)
       .then((res) => {
         if (res) {
-          //setLoggedIn(true);
+          setLoggedIn(true);
           setHeaderMail(email);
           navigate("/");
           localStorage.setItem("jwt", res.token);
