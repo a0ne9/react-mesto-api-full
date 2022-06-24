@@ -29,10 +29,9 @@ function App() {
   const [headerMail, setHeaderMail] = React.useState(" ");
   const [toolTipMessage, setToolTipMessage] = React.useState(true);
 
-
-  /*React.useEffect(() => {
+  React.useEffect(() =>{
+    handleTokenCheck();
     if (loggedIn) {
-      navigate("/");
       Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialCards]) => {
         setCurrentUser(profile);
         setCards(initialCards);
@@ -40,34 +39,7 @@ function App() {
         console.log(err);
       });
     }
-
-  }, [loggedIn]);*/
-
-  React.useEffect(() => {
-    api
-        .getProfile()
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }, []);
-
-  React.useEffect(() => {
-    handleTokenCheck();
-  }, []);
-
-  React.useEffect(() => {
-    api
-        .getInitialCards()
-        .then((res) => {
-          setCards(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }, []);
+  }, [loggedIn])
 
 
   function handleTokenCheck() {
@@ -197,10 +169,10 @@ function App() {
       .login(password, email)
       .then((res) => {
         if (res) {
+          localStorage.setItem("jwt", res.token);
           setLoggedIn(true);
           setHeaderMail(email);
           navigate("/");
-          localStorage.setItem("jwt", res.token);
         }
       })
       .catch((err) => {

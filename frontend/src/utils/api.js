@@ -1,7 +1,13 @@
 class Api {
   constructor({ baseUrl, headers }) {
-    this._headers = headers;
     this._baseUrl = baseUrl;
+  }
+
+  get _headers() {
+    return {
+      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      'Content-Type': 'application/json'
+    }
   }
 
   _checkResponse(res) {
@@ -82,8 +88,4 @@ class Api {
 
 export const api = new Api({
   baseUrl: "https://api.mestodomain.students.nomoredomains.xyz",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
-  },
 });
