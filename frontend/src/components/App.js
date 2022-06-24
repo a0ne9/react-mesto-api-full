@@ -39,7 +39,6 @@ function App() {
       Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialCards]) => {
         setCurrentUser(profile);
         setCards(initialCards);
-        console.log(cards)
       }).catch((err) => {
         console.log(err);
       });
@@ -174,7 +173,7 @@ function App() {
       .login(password, email)
       .then((res) => {
         if (res) {
-          setLoggedIn(true);
+          //setLoggedIn(true);
           setHeaderMail(email);
           navigate("/");
           localStorage.setItem("jwt", res.token);
