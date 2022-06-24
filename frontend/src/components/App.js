@@ -29,11 +29,8 @@ function App() {
   const [headerMail, setHeaderMail] = React.useState(" ");
   const [toolTipMessage, setToolTipMessage] = React.useState(true);
 
-  React.useEffect(() => {
-    handleTokenCheck()
-  }, [])
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     if (loggedIn) {
       navigate("/");
       Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialCards]) => {
@@ -44,7 +41,34 @@ function App() {
       });
     }
 
-  }, [loggedIn]);
+  }, [loggedIn]);*/
+
+  React.useEffect(() => {
+    api
+        .getProfile()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, []);
+
+  React.useEffect(() => {
+    handleTokenCheck();
+  }, []);
+
+  React.useEffect(() => {
+    api
+        .getInitialCards()
+        .then((res) => {
+          setCards(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, []);
+
 
   function handleTokenCheck() {
     const token = localStorage.getItem("jwt");
