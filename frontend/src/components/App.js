@@ -41,6 +41,23 @@ function App() {
 
   }, [loggedIn]);
 
+  function handleTokenCheck() {
+    const token = localStorage.getItem("jwt");
+    auth
+        .tokenCheck(token)
+        .then((res) => {
+          if (res) {
+            setHeaderMail(res.email);
+            setLoggedIn(true);
+            setCurrentUser(res)
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }
+
   function openProfilePopup() {
     toggleEditProfile(true);
   }
@@ -165,22 +182,7 @@ function App() {
       });
   }
 
-  function handleTokenCheck() {
-    const token = localStorage.getItem("jwt");
-    auth
-      .tokenCheck(token)
-      .then((res) => {
-        if (res) {
-          setHeaderMail(res.email);
-          setLoggedIn(true);
-          setCurrentUser(res)
-          navigate("/");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
 
   function logout() {
     navigate("/signin");
