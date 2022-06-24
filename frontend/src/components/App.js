@@ -33,13 +33,13 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialcards]) => {
         setCurrentUser(profile);
-        setCards(initialcards)
+        setCards(initialcards);
       }).catch((err) => {
         console.log(err);
       });
     }
 
-  }, [loggedIn, currentUser]);
+  }, [loggedIn]);
 
   function handleTokenCheck() {
     const token = localStorage.getItem("jwt");
