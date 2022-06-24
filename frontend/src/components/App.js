@@ -39,7 +39,7 @@ function App() {
       });
     }
 
-  }, [loggedIn]);
+  }, [loggedIn, currentUser]);
 
   function handleTokenCheck() {
     const token = localStorage.getItem("jwt");
@@ -49,9 +49,9 @@ function App() {
           .then((res) => {
             if (res) {
               setHeaderMail(res.email);
-              setLoggedIn(true);
               setCurrentUser(res)
               navigate("/");
+              setLoggedIn(true);
             }
           })
           .catch((err) => {
