@@ -25,15 +25,21 @@ function App() {
   const [isInfoTooltipOpen, toggleInfoToolTip] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const navigate = useNavigate();
+  const [cards, setCards] = React.useState([]);
   const [headerMail, setHeaderMail] = React.useState(" ");
   const [toolTipMessage, setToolTipMessage] = React.useState(true);
 
   React.useEffect(() => {
-    handleTokenCheck();
+    handleTokenCheck()
+  }, [])
+
+  React.useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialcards]) => {
+      navigate("/");
+      Promise.all([api.getProfile(), api.getInitialCards()]).then(([profile, initialCards]) => {
         setCurrentUser(profile);
-        setCards(initialcards);
+        setCards(initialCards);
+        console.log(cards)
       }).catch((err) => {
         console.log(err);
       });
@@ -50,7 +56,6 @@ function App() {
             if (res) {
               setHeaderMail(res.email);
               setCurrentUser(res)
-              navigate("/");
               setLoggedIn(true);
             }
           })
@@ -107,8 +112,6 @@ function App() {
         console.log(err);
       });
   }
-
-  const [cards, setCards] = React.useState([]);
 
   function handleCardLike(card) {
     console.log(card)
