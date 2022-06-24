@@ -43,19 +43,21 @@ function App() {
 
   function handleTokenCheck() {
     const token = localStorage.getItem("jwt");
-    auth
-        .tokenCheck(token)
-        .then((res) => {
-          if (res) {
-            setHeaderMail(res.email);
-            setLoggedIn(true);
-            setCurrentUser(res)
-            navigate("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if(token) {
+      auth
+          .tokenCheck(token)
+          .then((res) => {
+            if (res) {
+              setHeaderMail(res.email);
+              setLoggedIn(true);
+              setCurrentUser(res)
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
   }
 
   function openProfilePopup() {
